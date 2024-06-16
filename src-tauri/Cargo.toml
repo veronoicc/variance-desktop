@@ -1,13 +1,13 @@
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "cinny"
+name = "variance"
 version = "3.2.1"
 description = "Yet another matrix client"
 authors = ["Ajay Bura"]
 license = "AGPL-3.0-only"
-repository = "https://github.com/cinnyapp/cinny-desktop"
-default-run = "cinny"
+repository = "https://github.com/veronoicc/variance-desktop"
+default-run = "variance"
 edition = "2021"
 rust-version = "1.61"
 

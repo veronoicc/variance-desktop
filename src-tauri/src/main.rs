@@ -32,7 +32,7 @@ fn main() {
                 window.set_focus().unwrap();
                 tray_handle
                     .get_item("toggle")
-                    .set_title("Hide Cinny")
+                    .set_title("Hide Variance")
                     .unwrap();
             }
         }))

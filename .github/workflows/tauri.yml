@@ -26,16 +26,14 @@ jobs:
         uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: stable
-      - name: Install cinny dependencies
-        run: cd cinny && npm ci
+      - name: Install variance dependencies
+        run: cd variance && npm ci
       - name: Install tauri dependencies
         run: npm ci
       - name: Build desktop app with Tauri
         uses: tauri-apps/tauri-action@v0.5.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           NODE_OPTIONS: "--max_old_space_size=4096"
         with:
           releaseId: ${{ steps.get_release.outputs.upload_url }}
@@ -48,21 +46,21 @@ jobs:
           echo "${Env:TAURI_VERSION}"
         shell: pwsh
       - name: Move msi
-        run: Move-Item "src-tauri\target\release\bundle\msi\Cinny_${{ env.TAURI_VERSION }}_x64_en-US.msi" "src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi"
+        run: Move-Item "src-tauri\target\release\bundle\msi\Variance_${{ env.TAURI_VERSION }}_x64_en-US.msi" "src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi"
         shell: pwsh
       - name: Move msi.zip
-        run: Move-Item "src-tauri\target\release\bundle\msi\Cinny_${{ env.TAURI_VERSION }}_x64_en-US.msi.zip" "src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi.zip"
+        run: Move-Item "src-tauri\target\release\bundle\msi\Variance_${{ env.TAURI_VERSION }}_x64_en-US.msi.zip" "src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi.zip"
         shell: pwsh
       - name: Move msi.zip.sig
-        run: Move-Item "src-tauri\target\release\bundle\msi\Cinny_${{ env.TAURI_VERSION }}_x64_en-US.msi.zip.sig" "src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi.zip.sig"
+        run: Move-Item "src-tauri\target\release\bundle\msi\Variance_${{ env.TAURI_VERSION }}_x64_en-US.msi.zip.sig" "src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi.zip.sig"
         shell: pwsh
       - name: Upload tagged release
         uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
         with:
           files: |
-            src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi
-            src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi.zip
-            src-tauri\target\release\bundle\msi\Cinny_desktop-x86_64.msi.zip.sig
+            src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi
+            src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi.zip
+            src-tauri\target\release\bundle\msi\Variance_desktop-x86_64.msi.zip.sig
 
   # Linux-x86_64
   linux-x86_64:
@@ -91,16 +89,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
-      - name: Install cinny dependencies
-        run: cd cinny && npm ci
+      - name: Install variance dependencies
+        run: cd variance && npm ci
       - name: Install tauri dependencies
         run: npm ci
       - name: Build desktop app with Tauri
         uses: tauri-apps/tauri-action@v0.5.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           NODE_OPTIONS: "--max_old_space_size=4096"
         with:
           releaseId: ${{ steps.get_release.outputs.upload_url }}
@@ -108,21 +104,21 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::$(jq .package.version src-tauri/tauri.conf.json | tr -d '"')
       - name: Move deb
-        run: mv "src-tauri/target/release/bundle/deb/cinny_${{ steps.vars.outputs.tag }}_amd64.deb" "src-tauri/target/release/bundle/deb/Cinny_desktop-x86_64.deb"
+        run: mv "src-tauri/target/release/bundle/deb/variance_${{ steps.vars.outputs.tag }}_amd64.deb" "src-tauri/target/release/bundle/deb/Variance_desktop-x86_64.deb"
       - name: Move AppImage
-        run: mv "src-tauri/target/release/bundle/appimage/cinny_${{ steps.vars.outputs.tag }}_amd64.AppImage" "src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage"
+        run: mv "src-tauri/target/release/bundle/appimage/variance_${{ steps.vars.outputs.tag }}_amd64.AppImage" "src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage"
       - name: Move AppImage.tar.gz
-        run: mv "src-tauri/target/release/bundle/appimage/cinny_${{ steps.vars.outputs.tag }}_amd64.AppImage.tar.gz" "src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage.tar.gz"
+        run: mv "src-tauri/target/release/bundle/appimage/variance_${{ steps.vars.outputs.tag }}_amd64.AppImage.tar.gz" "src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage.tar.gz"
       - name: Move AppImage.tar.gz.sig
-        run: mv "src-tauri/target/release/bundle/appimage/cinny_${{ steps.vars.outputs.tag }}_amd64.AppImage.tar.gz.sig" "src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage.tar.gz.sig"
+        run: mv "src-tauri/target/release/bundle/appimage/variance_${{ steps.vars.outputs.tag }}_amd64.AppImage.tar.gz.sig" "src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage.tar.gz.sig"
       - name: Upload tagged release
         uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
         with:
           files: |
-            src-tauri/target/release/bundle/deb/Cinny_desktop-x86_64.deb
-            src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage
-            src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage.tar.gz
-            src-tauri/target/release/bundle/appimage/Cinny_desktop-x86_64.AppImage.tar.gz.sig
+            src-tauri/target/release/bundle/deb/Variance_desktop-x86_64.deb
+            src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage
+            src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage.tar.gz
+            src-tauri/target/release/bundle/appimage/Variance_desktop-x86_64.AppImage.tar.gz.sig
 
   # macos-x86_64
   macos-x86_64:
@@ -146,16 +142,14 @@ jobs:
         uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: stable
-      - name: Install cinny dependencies
-        run: cd cinny && npm ci
+      - name: Install variance dependencies
+        run: cd variance && npm ci
       - name: Install tauri dependencies
         run: npm ci
       - name: Build desktop app with Tauri
         uses: tauri-apps/tauri-action@v0.5.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           NODE_OPTIONS: "--max_old_space_size=4096"
         with:
           releaseId: ${{ steps.get_release.outputs.upload_url }}
@@ -163,18 +157,18 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::$(jq .package.version src-tauri/tauri.conf.json | tr -d '"')
       - name: Move dmg
-        run: mv "src-tauri/target/release/bundle/dmg/Cinny_${{ steps.vars.outputs.tag }}_x64.dmg" "src-tauri/target/release/bundle/dmg/Cinny_desktop-x86_64.dmg"
+        run: mv "src-tauri/target/release/bundle/dmg/Variance_${{ steps.vars.outputs.tag }}_x64.dmg" "src-tauri/target/release/bundle/dmg/Variance_desktop-x86_64.dmg"
       - name: Move app.tar.gz
-        run: mv "src-tauri/target/release/bundle/macos/Cinny.app.tar.gz" "src-tauri/target/release/bundle/macos/Cinny_desktop-x86_64.app.tar.gz"
+        run: mv "src-tauri/target/release/bundle/macos/Variance.app.tar.gz" "src-tauri/target/release/bundle/macos/Variance_desktop-x86_64.app.tar.gz"
       - name: Move app.tar.gz.sig
-        run: mv "src-tauri/target/release/bundle/macos/Cinny.app.tar.gz.sig" "src-tauri/target/release/bundle/macos/Cinny_desktop-x86_64.app.tar.gz.sig"
+        run: mv "src-tauri/target/release/bundle/macos/Variance.app.tar.gz.sig" "src-tauri/target/release/bundle/macos/Variance_desktop-x86_64.app.tar.gz.sig"
       - name: Upload tagged release
         uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
         with:
           files: |
-            src-tauri/target/release/bundle/dmg/Cinny_desktop-x86_64.dmg
-            src-tauri/target/release/bundle/macos/Cinny_desktop-x86_64.app.tar.gz
-            src-tauri/target/release/bundle/macos/Cinny_desktop-x86_64.app.tar.gz.sig
+            src-tauri/target/release/bundle/dmg/Variance_desktop-x86_64.dmg
+            src-tauri/target/release/bundle/macos/Variance_desktop-x86_64.app.tar.gz
+            src-tauri/target/release/bundle/macos/Variance_desktop-x86_64.app.tar.gz.sig
 
   # macos-aarch64
   # macos-aarch64:
@@ -198,8 +192,8 @@ jobs:
   #       uses: actions-rs/toolchain@v1.0.7
   #       with:
   #         toolchain: stable
-  #     - name: Install cinny dependencies
-  #       run: cd cinny && npm ci
+  #     - name: Install variance dependencies
+  #       run: cd variance && npm ci
   #     - name: Install tauri dependencies
   #       run: npm ci
   #     - name: Install rustup target aarch64 darwin
@@ -220,21 +214,21 @@ jobs:
   #       run: echo ::set-output name=tag::$(jq .package.version src-tauri/tauri.conf.json | tr -d '"')
   #     - name: Move dmg
   #       if: always()
-  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Cinny_${{ steps.vars.outputs.tag }}_aarch64.dmg" "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Cinny_desktop-aarch64.dmg"
+  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Variance_${{ steps.vars.outputs.tag }}_aarch64.dmg" "src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Variance_desktop-aarch64.dmg"
   #     - name: Move app.tar.gz
   #       if: always()
-  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny.app.tar.gz" "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny_desktop-aarch64.app.tar.gz"
+  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance.app.tar.gz" "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance_desktop-aarch64.app.tar.gz"
   #     - name: Move app.tar.gz.sig
   #       if: always()
-  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny.app.tar.gz.sig" "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny_desktop-aarch64.app.tar.gz.sig"
+  #       run: mv "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance.app.tar.gz.sig" "src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance_desktop-aarch64.app.tar.gz.sig"
   #     - name: Upload tagged release
   #       if: always()
   #       uses: softprops/action-gh-release@69320dbe05506a9a39fc8ae11030b214ec2d1f87
   #       with:
   #         files: |
-  #           src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Cinny_desktop-aarch64.dmg
-  #           src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny_desktop-aarch64.tar.gz
-  #           src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Cinny_desktop-aarch64.tar.gz.sig
+  #           src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/Variance_desktop-aarch64.dmg
+  #           src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance_desktop-aarch64.tar.gz
+  #           src-tauri/target/aarch64-apple-darwin/release/bundle/macos/Variance_desktop-aarch64.tar.gz.sig
 
   # Upload release.json
   release-update:

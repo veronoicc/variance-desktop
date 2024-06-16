@@ -1,5 +1,5 @@
 {
-  "name": "cinny",
+  "name": "variance",
   "version": "3.2.1",
   "description": "Yet another matrix client",
   "main": "index.js",

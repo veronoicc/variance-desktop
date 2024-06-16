@@ -1,19 +1,19 @@
 {
   "package": {
-    "productName": "Cinny",
+    "productName": "Variance",
     "version": "3.2.1"
   },
   "build": {
-    "distDir": "../cinny/dist",
+    "distDir": "../variance/dist",
     "devPath": "http://localhost:8080",
-    "beforeDevCommand": "cd cinny && npm start",
-    "beforeBuildCommand": "cd cinny && npm run build"
+    "beforeDevCommand": "cd variance && npm start",
+    "beforeBuildCommand": "cd variance && npm run build"
   },
   "tauri": {
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "in.cinny.app",
+      "identifier": "desktop.variance.veronoi.cc",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -51,17 +51,16 @@
     "updater": {
       "active": true,
       "endpoints": [
-          "https://github.com/cinnyapp/cinny-desktop/releases/download/tauri/release.json"
+          "https://github.com/veronoicc/variance-desktop/releases/download/tauri/release.json"
       ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDE2NDc3NDBGMTAzNTk1NUYKUldSZmxUVVFEM1JIRnRuMjVRTkFOQ21lUFI5KzRMU0s4OWtBS1RNRUVCNE9LcE9GcExNZ2M2NHoK"
+      "dialog": true
     },
     "allowlist": {
       "all": true
     },
     "windows": [
       {
-        "title": "Cinny",
+        "title": "Variance",
         "width": 1024,
         "height": 724,
         "center": true,

@@ -3,10 +3,10 @@ use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
 pub(crate) fn menu() -> Menu {
     Menu::new()
         .add_submenu(Submenu::new(
-            "Cinny",
+            "Variance",
             Menu::new()
                 .add_native_item(MenuItem::About(
-                    "Cinny".to_string(),
+                    "Variance".to_string(),
                     AboutMetadata::new(),
                 ))
                 .add_native_item(MenuItem::Separator)
