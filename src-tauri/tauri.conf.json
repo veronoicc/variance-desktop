@@ -48,13 +48,6 @@
         }
       }
     },
-    "updater": {
-      "active": true,
-      "endpoints": [
-          "https://github.com/veronoicc/variance-desktop/releases/download/tauri/release.json"
-      ],
-      "dialog": true
-    },
     "allowlist": {
       "all": true
     },
